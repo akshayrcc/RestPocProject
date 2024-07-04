@@ -1,5 +1,7 @@
 # REST Poc Project
 
+A basic Spring boot project to read a CSV file and display its data.
+
 ## Endpoint details:
 
 - GET /api/customers - returns the list of all customers in the CSV file.
@@ -21,7 +23,7 @@
 ## Steps to build docker image & spin docker container
 
 1. `mvn clean package`
-2. `docker build -t restpocproject`
+2. `docker build -t restpocproject .`
 3. `docker run -p 8091:8091 restpocproject`
 
 ## Steps to monitor, stop Docker container & delete docker image
