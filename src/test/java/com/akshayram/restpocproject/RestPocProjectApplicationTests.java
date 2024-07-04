@@ -1,10 +1,10 @@
-package com.akshayram.intuitproject;
+package com.akshayram.restpocproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class IntuitProjectApplicationTests {
+class RestPocProjectApplicationTests {
 
     @Test
     void contextLoads() {

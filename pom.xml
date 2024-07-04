@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.akshayram</groupId>
-    <artifactId>IntuitProject</artifactId>
+    <artifactId>RestPocProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>IntuitProject</name>
-    <description>IntuitProject</description>
+    <name>RestPocProject</name>
+    <description>RestPocProject</description>
     <url/>
     <licenses>
         <license/>
@@ -50,15 +50,15 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-csv</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-csv</artifactId>-->
-<!--&lt;!&ndash;            <version>1.8</version>&ndash;&gt;-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.commons</groupId>-->
+        <!--            <artifactId>commons-csv</artifactId>-->
+        <!--&lt;!&ndash;            <version>1.8</version>&ndash;&gt;-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
