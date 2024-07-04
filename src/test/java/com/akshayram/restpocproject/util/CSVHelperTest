@@ -1,0 +1,86 @@
+package com.akshayram.restpocproject.util;
+
+import com.akshayram.restpocproject.customer.Customer;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CSVHelperTest {
+
+    private CSVHelper csvHelper;
+
+    @BeforeEach
+    void setUp() {
+        csvHelper = new CSVHelper();
+    }
+
+    @Test
+    void readCSVFile_WithValidFile_ShouldReturnListOfCustomers(@TempDir Path tempDir) throws IOException {
+        // Arrange
+        File csvFile = tempDir.resolve("test.csv").toFile();
+        try (FileWriter writer = new FileWriter(csvFile)) {
+            writer.write("Index,Customer Id,First Name,Last Name,Company,City,Country,Phone 1,Phone 2,Email,Subscription Date,Website\n");
+            writer.write("1,CUST001,John,Doe,ACME Inc,New York,USA,1234567890,0987654321,john@example.com,2023-05-01,www.johndoe.com\n");
+            writer.write("2,CUST002,Jane,Smith,XYZ Corp,London,UK,9876543210,0123456789,jane@example.com,2023-05-02,www.janesmith.com\n");
+        }
+
+        // Act
+        List<Customer> customers = csvHelper.readCSVFile(csvFile.getAbsolutePath());
+
+        // Assert
+        assertEquals(2, customers.size());
+        assertEquals("CUST001", customers.get(0).customerId());
+        assertEquals("Jane", customers.get(1).firstName());
+    }
+
+    @Test
+    void readCSVFile_WithInvalidFile_ShouldThrowRuntimeException() {
+        // Arrange
+        String nonExistentFile = "/non-existent-file.csv";
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> csvHelper.readCSVFile(nonExistentFile));
+    }
+
+    @Test
+    void readCSVFile_WithInvalidData_ShouldSkipInvalidRows(@TempDir Path tempDir) throws IOException {
+        // Arrange
+        File csvFile = tempDir.resolve("test.csv").toFile();
+        try (FileWriter writer = new FileWriter(csvFile)) {
+            writer.write("Index,Customer Id,First Name,Last Name,Company,City,Country,Phone 1,Phone 2,Email,Subscription Date,Website\n");
+            writer.write("1,CUST001,John,Doe,ACME Inc,New York,USA,1234567890,0987654321,john@example.com,2023-05-01,www.johndoe.com\n");
+            writer.write("2,CUST002,Jane,Smith,XYZ Corp,London,UK,9876543210,0123456789,jane@example.com,invalid-date,www.janesmith.com\n");
+            writer.write("3,CUST003,Invalid,Row,Missing,Fields\n");
+        }
+
+        // Act
+        List<Customer> customers = csvHelper.readCSVFile(csvFile.getAbsolutePath());
+
+        // Assert
+        assertEquals(1, customers.size());
+        assertEquals("CUST001", customers.get(0).customerId());
+    }
+
+    @Test
+    void readCSVFile_WithEmptyFile_ShouldReturnEmptyList(@TempDir Path tempDir) throws IOException {
+        // Arrange
+        File csvFile = tempDir.resolve("test.csv").toFile();
+        try (FileWriter writer = new FileWriter(csvFile)) {
+            writer.write("Index,Customer Id,First Name,Last Name,Company,City,Country,Phone 1,Phone 2,Email,Subscription Date,Website\n");
+        }
+
+        // Act
+        List<Customer> customers = csvHelper.readCSVFile(csvFile.getAbsolutePath());
+
+        // Assert
+        assertTrue(customers.isEmpty());
+    }
+}
